@@ -1,0 +1,481 @@
+# Postman-1
+practice for API
+{
+	"info": {
+		"_postman_id": "0f6b770f-d60f-4786-92a8-66d45fb4c448",
+		"name": "Account",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23182612"
+	},
+	"item": [
+		{
+			"name": "Create a User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"UID\" , response.userID)\r",
+							"postman.setEnvironmentVariable(\"UN\" , response.username)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userName\": \"{{$randomUserName}}\",\n  \"password\": \"{{password}}\"\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/Account/v1/User",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"Account",
+						"v1",
+						"User"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "crete token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"token\" , response.token)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userName\": \"{{UN}}\",\n  \"password\": \"{{password}}\"\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/Account/v1/GenerateToken",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"Account",
+						"v1",
+						"GenerateToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authorization",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userName\": \"{{UN}}\",\n  \"password\": \"{{password}}\"\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/Account/v1/Authorized",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"Account",
+						"v1",
+						"Authorized"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Solicitar",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/Account/v1/User/{{UID}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"Account",
+						"v1",
+						"User",
+						"{{UID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "collection books",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic dGVzdDE6TEBjbGF2ZTEyMw=="
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6InRlc3QxIiwicGFzc3dvcmQiOiJMQGNsYXZlMTIzIiwiaWF0IjoxNjc0MDQ5MDU4fQ.yLNQbrFz-bmEzcr3WWfsZkVxwIKfqMVntxixRMQ7THE"
+					}
+				],
+				"url": {
+					"raw": "{{URLbook}}/v1/Books",
+					"host": [
+						"{{URLbook}}"
+					],
+					"path": [
+						"v1",
+						"Books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "request a speciif book",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic dGVzdDE6TEBjbGF2ZTEyMw=="
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6InRlc3QxIiwicGFzc3dvcmQiOiJMQGNsYXZlMTIzIiwiaWF0IjoxNjc0MDQ5MDU4fQ.yLNQbrFz-bmEzcr3WWfsZkVxwIKfqMVntxixRMQ7THE"
+					}
+				],
+				"url": {
+					"raw": "{{URLbook}}/v1/Book?ISBN=9781449325862",
+					"host": [
+						"{{URLbook}}"
+					],
+					"path": [
+						"v1",
+						"Book"
+					],
+					"query": [
+						{
+							"key": "ISBN",
+							"value": "9781449325862"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic dGVzdDE6TEBjbGF2ZTEyMw=="
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6InRlc3QxIiwicGFzc3dvcmQiOiJMQGNsYXZlMTIzIiwiaWF0IjoxNjc0MDQ5MDU4fQ.yLNQbrFz-bmEzcr3WWfsZkVxwIKfqMVntxixRMQ7THE"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": \"{{UID}}\",\n  \"collectionOfIsbns\": [\n    {\n      \"isbn\": \"9781449325862\"\n    },\n    {\n      \"isbn\": \"9781449337711\"\n    },\n    {\n      \"isbn\": \"9781449331818\"\n    },\n    {\n      \"isbn\": \"9781449365035\"\n    }\n  ]\n}"
+				},
+				"url": {
+					"raw": "{{URLbook}}/v1/Books",
+					"host": [
+						"{{URLbook}}"
+					],
+					"path": [
+						"v1",
+						"Books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modificate the isbn",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic dGVzdDE6TEBjbGF2ZTEyMw=="
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6InRlc3QxIiwicGFzc3dvcmQiOiJMQGNsYXZlMTIzIiwiaWF0IjoxNjc0MDQ5MDU4fQ.yLNQbrFz-bmEzcr3WWfsZkVxwIKfqMVntxixRMQ7THE"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": \"{{UID}}\",\n  \"isbn\": \"9781449337711\"\n}"
+				},
+				"url": {
+					"raw": "{{URLbook}}/v1/Books/9781449331818",
+					"host": [
+						"{{URLbook}}"
+					],
+					"path": [
+						"v1",
+						"Books",
+						"9781449331818"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete one book",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic dGVzdDE6TEBjbGF2ZTEyMw=="
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6InRlc3QxIiwicGFzc3dvcmQiOiJMQGNsYXZlMTIzIiwiaWF0IjoxNjc0MDQ5MDU4fQ.yLNQbrFz-bmEzcr3WWfsZkVxwIKfqMVntxixRMQ7THE"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"isbn\": \"9781449325862\",\n  \"userId\": \"{{UID}}\"\n}"
+				},
+				"url": {
+					"raw": "{{URLbook}}/v1/Book/",
+					"host": [
+						"{{URLbook}}"
+					],
+					"path": [
+						"v1",
+						"Book",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete all the books on your account",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic dGVzdDE6TEBjbGF2ZTEyMw=="
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6InRlc3QxIiwicGFzc3dvcmQiOiJMQGNsYXZlMTIzIiwiaWF0IjoxNjc0MDQ5MDU4fQ.yLNQbrFz-bmEzcr3WWfsZkVxwIKfqMVntxixRMQ7THE"
+					}
+				],
+				"url": {
+					"raw": "{{URLbook}}/v1/Books?UserId={{UID}}",
+					"host": [
+						"{{URLbook}}"
+					],
+					"path": [
+						"v1",
+						"Books"
+					],
+					"query": [
+						{
+							"key": "UserId",
+							"value": "{{UID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "authorization",
+						"value": "Basic dGVzdDE6TEBjbGF2ZTEyMw=="
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6InRlc3QxIiwicGFzc3dvcmQiOiJMQGNsYXZlMTIzIiwiaWF0IjoxNjc0MDQ5MDU4fQ.yLNQbrFz-bmEzcr3WWfsZkVxwIKfqMVntxixRMQ7THE"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/Account/v1/User/{{UID}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"Account",
+						"v1",
+						"User",
+						"{{UID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "https://bookstore.toolsqa.com/Account"
+		}
+	]
+}
